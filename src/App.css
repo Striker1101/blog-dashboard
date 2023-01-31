@@ -1,0 +1,11 @@
+.option{
+  border: 2px solid black;
+  height: 3px;
+  margin: 2px;
+  width: 2px;
+  border-radius: 50px;
+  background-color: black;
+}
+a{
+  text-decoration: none;
+}
