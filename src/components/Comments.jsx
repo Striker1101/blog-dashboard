@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 
 import deleteCom from '../assets/delete.svg'
 import edit from '../assets/edit.svg'
-import {comment_update} from '../post'
+import {comment_update, comment_delete} from '../post'
 export default function Comments({postID, comments, setComments}) {
   const [toggle, setToggle] = useState(true) 
 
@@ -50,9 +50,21 @@ export default function Comments({postID, comments, setComments}) {
   //delete text on click
   function deleteComment(e){
     const comment = e.currentTarget.parentElement.parentElement.parentElement
-    console.log(comment)
     const commentID = comment.getAttribute('data-id')
-    
+    const choice = prompt(' Are you sure about this, your cant get Comment back. type yes to continue')
+    if(choice.toUpperCase() === 'YES'){
+     if(toggle){
+        setToggle(false)
+        comment_delete(process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_DEV_MODE
+        : process.env.REACT_APP_PRO_MODE,postID,commentID)
+        .then((data)=>{
+            setComments(data.json.comments);
+            setToggle(true)
+        })
+     }
+        
+    }
   }
 
 return (
