@@ -19,7 +19,7 @@ function App() {
         <Route path="/:post" element={<BlogPage />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/log-in" element={<Login />} />
-        <Route path="/add-post" element={<AddPost index={index} />} />
+        <Route path="/add-post" element={<AddPost index={index} setIndex={setindex} />} />
       </Routes>
       <Footer />
     </div>

@@ -40,7 +40,7 @@ export default function Blog_page() {
       {post._id ? (
         <>
           <PostID post={post} />
-          {comments.length ? <Comments comments={comments} /> : ""}
+          {comments.length ? <Comments setComments={setComments} postID={take} comments={comments} /> : ""}
         </>
       ) : (
         "loading"
