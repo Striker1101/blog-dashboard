@@ -9,7 +9,6 @@ export async function fetchGet(url) {
 
 export async function fetchGetAuth(url) {
   const response = await fetch(url, {
-   
     headers: {
       "Content-Type": "application/json",
       // "Content-Type": "application/x-www-form-urlencoded",
@@ -21,7 +20,7 @@ export async function fetchGetAuth(url) {
   return { json, status };
 }
 
-export async function fetchGet_ID_toggle(url="", ID, data = {}) {
+export async function fetchGet_ID_toggle(url = "", ID, data = {}) {
   const response = await fetch(`${url}/posts/${ID}/toggle`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -35,6 +34,25 @@ export async function fetchGet_ID_toggle(url="", ID, data = {}) {
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  let json = await response.json();
+  let status = response.status;
+  return { json, status };
+}
+
+export async function fetchGet_ID_delete(url = "", ID) {
+  const response = await fetch(`${url}/posts/${ID}/delete`, {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Bearer ${token}`,
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   let json = await response.json();
   let status = response.status;

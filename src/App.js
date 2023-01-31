@@ -8,16 +8,18 @@ import Signup from "./signup";
 import Login from "./login";
 import AddPost from "./AddPost";
 import Footer from "./components/Footer";
+import { useState } from "react";
 function App() {
+  const [index, setindex] =useState(null)
   return (
     <div className="blog">
       <Nav />
       <Routes>
-        <Route index path="/" element={<Index />} />
+        <Route index path="/" element={<Index setIndex={setindex} />} />
         <Route path="/:post" element={<BlogPage />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/log-in" element={<Login />} />
-        <Route path="/add-post" element={<AddPost />} />
+        <Route path="/add-post" element={<AddPost index={index} />} />
       </Routes>
       <Footer />
     </div>

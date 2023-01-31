@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./components/Card";
 import { Link } from "react-router-dom";
 import { fetchGetAuth, fetchGet_ID_toggle } from "./post";
-export default function Index() {
+export default function Index({setIndex}) {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     fetchGetAuth(
@@ -24,7 +24,6 @@ export default function Index() {
     } else {
       toggle = true;
     }
-    console.log(id);
     fetchGet_ID_toggle(
       process.env.NODE_ENV === "development"
         ? process.env.REACT_APP_DEV_MODE
@@ -48,7 +47,7 @@ export default function Index() {
               }}
             >
               {posts.map((post, i) => {
-                return <Card key={i} index={i} post={post} toggle={toggle} />;
+                return <Card setPosts={setPosts} setIndex={setIndex} key={i} index={i} post={post} toggle={toggle} />;
               })}
               <Link to={"/add-post"}>
                 <button>Add Post</button>
