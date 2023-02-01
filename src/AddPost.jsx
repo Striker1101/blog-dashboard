@@ -2,7 +2,7 @@ import React,{useRef, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchGetAuth } from './post'
 import postAuth from './post'
-import { cleanup } from '@testing-library/react';
+import {Helmet} from 'react-helmet'
 export default function AddPost({index, setIndex}) {
     const form = useRef();
     const [post,  setPost] = useState(undefined)
@@ -62,8 +62,13 @@ export default function AddPost({index, setIndex}) {
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
-        height:'90vh'
+        height:'90vh',
+        backgroundColor:'wheat',
+        borderRadius:'20px'
     }}>
+  {    /*<Helmet>
+         <script src={`https://cdn.tiny.cloud/1/${REACT_TINY_API}/tinymce/6/tinymce.min.js`} referrerpolicy="origin"></script>
+  </Helmet> */}
         <form 
         onSubmit={(e)=>{e.preventDefault(); add_update()}}
         ref={form} action="#" method="post"
@@ -92,3 +97,19 @@ export default function AddPost({index, setIndex}) {
     </div>
   )
 }
+
+ //       <Helmet>
+  //          <script>
+  //   tinymce.init({
+  //     selector: 'textarea',
+  //     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+  //     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+  //     tinycomments_mode: 'embedded',
+  //     tinycomments_author: 'Author name',
+  //     mergetags_list: [
+  //       { value: 'First.Name', title: 'First Name' },
+  //       { value: 'Email', title: 'Email' },
+  //     ]
+  //   });
+  // </script>
+  //       </Helmet>

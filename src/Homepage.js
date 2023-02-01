@@ -35,7 +35,11 @@ export default function Index({setIndex}) {
     });
   }
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ 
+      display: "flex",
+       justifyContent: "center" ,
+      
+       }}>
       <div>
         {posts.length ? (
           <>
