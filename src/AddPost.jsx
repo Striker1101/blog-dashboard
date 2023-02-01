@@ -2,18 +2,19 @@ import React,{useRef, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchGetAuth } from './post'
 import postAuth from './post'
-import {Helmet} from 'react-helmet'
+import Textarea from './components/Textarea'
+
 export default function AddPost({index, setIndex}) {
     const form = useRef();
     const [post,  setPost] = useState(undefined)
     
     const navigate = useNavigate()
-  function add_update(){
+  function add_update(content){
     const title = document.getElementById('title').value
     const summary = document.getElementById('summary').value
-    const content = document.getElementById('summary').value
     const publish = document.getElementById('publish').checked
 
+    console.log(typeof content)
     if(post){
       var date = post.date
     }
@@ -62,9 +63,9 @@ export default function AddPost({index, setIndex}) {
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
-        height:'90vh',
         backgroundColor:'wheat',
-        borderRadius:'20px'
+        borderRadius:'20px',
+        paddingTop:'10px'
     }}>
   {    /*<Helmet>
          <script src={`https://cdn.tiny.cloud/1/${REACT_TINY_API}/tinymce/6/tinymce.min.js`} referrerpolicy="origin"></script>
@@ -82,34 +83,15 @@ export default function AddPost({index, setIndex}) {
                 SUMMARY:
                 <textarea required name="summary" id="summary" cols="30" rows="10" defaultValue={post ? post.summary : ""}></textarea>
             </label><br />
-            <label htmlFor="content">
-                CONTENT:
-                <textarea required name="comment" id="content" cols="30" rows="10" defaultValue={post ? post.content : ""}></textarea>
-            </label><br />
             <label htmlFor="publish">
                 DO YOU WISH TO PUBLISH:
 
                   <input type="checkbox" name="publish" id="publish" defaultChecked={post?post.publish:false } />
             </label>
-            <button type="submit">{post ? "UPDATE" : "ADD"}</button>
+            <Textarea submit={add_update} />
         </form>
       
     </div>
   )
 }
 
- //       <Helmet>
-  //          <script>
-  //   tinymce.init({
-  //     selector: 'textarea',
-  //     plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-  //     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-  //     tinycomments_mode: 'embedded',
-  //     tinycomments_author: 'Author name',
-  //     mergetags_list: [
-  //       { value: 'First.Name', title: 'First Name' },
-  //       { value: 'Email', title: 'Email' },
-  //     ]
-  //   });
-  // </script>
-  //       </Helmet>
