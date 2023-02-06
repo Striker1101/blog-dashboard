@@ -1,4 +1,4 @@
-# [blog Dashboard](https://blog-dashboard-three.vercel.app/)
+# [Blog Dashboard](https://blog-dashboard-three.vercel.app/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
