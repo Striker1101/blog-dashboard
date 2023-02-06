@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Card from "./components/Card";
 import { Link } from "react-router-dom";
-import { fetchGetAuth, fetchGet_ID_toggle } from "./post";
-export default function Index({setIndex}) {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    fetchGetAuth(
-      `${
-        process.env.NODE_ENV === "development"
-          ? process.env.REACT_APP_DEV_MODE
-          : process.env.REACT_APP_PRO_MODE
-      }/all`
-    ).then((data) => setPosts(data.json.posts));
-  }, []);
+import { fetchGet_ID_toggle } from "./post";
+export default function Index({setIndex,posts, setPosts}) {
+ 
 
   function toggle(e) {
     const card = e.currentTarget.parentElement.parentElement;
