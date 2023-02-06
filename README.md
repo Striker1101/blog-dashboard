@@ -11,11 +11,6 @@ The main goal of building this project was to perform valid sanitation on data p
 
 ### `Tools and library used`
 
--react
--js
--css
--html
-
 <ol>
   <li> react </li>
    <li> js </li>
