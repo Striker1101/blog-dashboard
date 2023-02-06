@@ -16,10 +16,20 @@ The main goal of building this project was to perform valid sanitation on data p
 -css
 -html
 
+<ol>
+  <li> react </li>
+   <li> js </li>
+   <li> css </li>
+   <li> html</li>
+</ol>
+
 
 ### `Featured`
 it alow all crud operation to be carried out on the api including 
--read
--update
--write
--delete
+
+<ul>
+  <li> read </li>
+  <li> update </li>
+  <li> write </li>
+  <li> delete </li>
+</ul>
