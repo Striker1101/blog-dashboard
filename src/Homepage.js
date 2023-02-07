@@ -2,14 +2,13 @@ import React from "react";
 import Card from "./components/Card";
 import { Link } from "react-router-dom";
 import { fetchGet_ID_toggle } from "./post";
-export default function Index({setIndex,posts, setPosts}) {
- 
-
+export default function Index({ setIndex, posts, setPosts }) {
   function toggle(e) {
     const card = e.currentTarget.parentElement.parentElement;
-    const take = card.children[1].children[0].textContent;
+    const take = card.children[2].children[0].textContent;
     const id = card.getAttribute("data-id");
     let toggle = null;
+
     if (take === "PUBLISHED") {
       toggle = false;
     } else {
@@ -26,11 +25,12 @@ export default function Index({setIndex,posts, setPosts}) {
     });
   }
   return (
-    <div style={{ 
-      display: "flex",
-       justifyContent: "center" ,
-      
-       }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       <div>
         {posts.length ? (
           <>
@@ -42,7 +42,16 @@ export default function Index({setIndex,posts, setPosts}) {
               }}
             >
               {posts.map((post, i) => {
-                return <Card setPosts={setPosts} setIndex={setIndex} key={i} index={i} post={post} toggle={toggle} />;
+                return (
+                  <Card
+                    setPosts={setPosts}
+                    setIndex={setIndex}
+                    key={i}
+                    index={i}
+                    post={post}
+                    toggle={toggle}
+                  />
+                );
               })}
               <Link to={"/add-post"}>
                 <button>Add Post</button>
