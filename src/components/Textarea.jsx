@@ -3,7 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 export default function App({ submit, post }) {
   const editorRef = useRef(null);
-  const log = function(){
+  const log = function () {
     if (editorRef.current) {
       const content = editorRef.current.getContent();
 
@@ -52,7 +52,7 @@ export default function App({ submit, post }) {
         }}
       />
       <button style={{ margin: "10px" }} onClick={log}>
-        Submit
+        {post ? "Update" : "Add"}
       </button>
     </>
   );

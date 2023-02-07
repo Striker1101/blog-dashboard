@@ -145,7 +145,7 @@ export default async function postAuth(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     headers: {
-      // "Content-Type": "application/json",
+      "Content-Type": "application/json",
       // "Content-Type": "multipart/form-data",
       // "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Bearer ${token}`,

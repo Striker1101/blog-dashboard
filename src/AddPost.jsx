@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import postAuth from "./post";
 import Textarea from "./components/Textarea";
-
-export default function AddPost({ posts, index, setIndex }) {
+import axios from "axios";
+export default function AddPost({setPosts, posts, index, setIndex }) {
   const form = useRef();
   const [post, setPost] = useState(undefined);
   const [Form, setForm] = useState({
@@ -12,7 +12,7 @@ export default function AddPost({ posts, index, setIndex }) {
     publish: "",
     image: "",
   });
-  const formData = new FormData();
+
   const navigate = useNavigate();
 
   function handlePhoto(e) {
@@ -29,20 +29,82 @@ export default function AddPost({ posts, index, setIndex }) {
   }
 
   function add_update(content) {
+    const token = localStorage.getItem("token");
+
+    /**
+     * 
+     * @param {string} id 
+     * repre the posts ID to be uploaded with an image if available
+     * @param {Array} res
+     * repre the received posts for update the home page
+     * @returns 
+     */
+    const uploadFile = async function (id, res) {
+      //build new FormData and appened  image and cloudinary upload preset 
+      const data = new FormData();
+      data.append("file", Form.image);
+      data.append("upload_preset", "blog_post");
+     
+      //return empty on no image found
+      if (!Form.image.length > 0) {
+        console.log(res.posts)
+        if(!res === undefined){
+          setPosts(res.posts)
+        }
+        navigate("/");
+        return;
+      }
+      await axios
+        .post("https://api.cloudinary.com/v1_1/durfrwtjs/image/upload", data)
+        .then((res) => {
+          axios.put(
+            `${
+              process.env.NODE_ENV === "development"
+                ? process.env.REACT_APP_DEV_MODE
+                : process.env.REACT_APP_PRO_MODE
+            }/posts/${id}/update_image`,
+            { imageUrl: res.data.secure_url, publicId: res.data.public_id },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ).then((response)=>{
+            setPosts(response.posts)
+            navigate("/");
+          })
+        });
+    };
+
     if (post) {
-      var date = post.date;
-    }
-    const blob = new Blob([content], { type: "text/xml"});
-
-    formData.append("image", Form.image);
-    formData.append("title", Form.title);
-    formData.append("summary", Form.summary);
-    formData.append("publish", Form.publish);
-    formData.append("content", blob);
-    formData.append("date", post ? date : "");
-
-    for (const key of formData.keys()) {
-      console.log(key);
+      return (() => {
+        axios
+          .put(
+            `${
+              process.env.NODE_ENV === "development"
+                ? process.env.REACT_APP_DEV_MODE
+                : process.env.REACT_APP_PRO_MODE
+            }/posts/${post._id}/update`,
+            {
+              title:  Form.title ===""  ? post.title : Form.title,
+              summary: Form.summary === "" ? post.summary : Form.summary ,
+              publish: Form.publish === "" ? post.publish : Form.publish,
+              content: content === "" ?  post.content : content,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                // "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            uploadFile(post._id, res.data);
+          });
+      })();
     }
 
     postAuth(
@@ -50,15 +112,20 @@ export default function AddPost({ posts, index, setIndex }) {
         process.env.NODE_ENV === "development"
           ? process.env.REACT_APP_DEV_MODE
           : process.env.REACT_APP_PRO_MODE
-      }/posts`,
-      formData
+      }/posts/${post ? `${post._id}/update` : ""}`,
+      {
+        title: Form.title,
+        summary: Form.summary,
+        publish: Form.publish,
+        content,
+      }
     ).then((data) => {
       console.log(data);
       form.current.reset();
       setIndex(null);
-      navigate("/");
+      uploadFile(data.json.id, data.json);
+      
     });
-    // ${post ? post._id : ""}
   }
 
   function cleanup() {
@@ -86,7 +153,7 @@ export default function AddPost({ posts, index, setIndex }) {
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        method='post'
+        method="post"
         ref={form}
         style={{
           display: "flex",
