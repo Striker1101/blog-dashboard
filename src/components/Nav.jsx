@@ -12,7 +12,7 @@ export default function Nav({ posts }) {
       <div style={{ display: "flex", gap: "10px" }}>
         <Link to={"/"}>Blog Post</Link>
         {posts.length ? (
-          <button type="submit">Signout</button>
+         <Link to={"/log-out"}>Log Out</Link>
         ) : (
           <Link to={"/sign-up"}>Sign up</Link>
         )}

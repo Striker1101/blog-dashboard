@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./components/Card";
 import { Link } from "react-router-dom";
+import Loader from "./components/Loader";
 import { fetchGet_ID_toggle } from "./post";
 export default function Index({ setIndex, posts, setPosts }) {
   function toggle(e) {
@@ -25,15 +26,14 @@ export default function Index({ setIndex, posts, setPosts }) {
     });
   }
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <div>
+    <div>
+      <div
+      >
         {posts.length ? (
-          <>
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+          }} >
             <div
               style={{
                 display: "flex",
@@ -57,9 +57,11 @@ export default function Index({ setIndex, posts, setPosts }) {
                 <button>Add Post</button>
               </Link>
             </div>
-          </>
+          </div>
         ) : (
-          "loading"
+          <div>
+            <Loader />
+          </div>
         )}
       </div>
     </div>

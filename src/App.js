@@ -8,6 +8,7 @@ import Signup from "./signup";
 import Login from "./login";
 import AddPost from "./AddPost";
 import Footer from "./components/Footer";
+import Logout from "./Logout";
 import React, { useEffect, useState } from "react";
 import { fetchGetAuth } from "./post";
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/:post" element={<BlogPage />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/log-in" element={<Login />} />
+        <Route path="/log-OUT" element={<Logout />} />
         <Route path="/add-post" element={<AddPost index={index} setIndex={setindex} posts={posts} setPosts={setPosts} />} />
       </Routes>
       <Footer />
