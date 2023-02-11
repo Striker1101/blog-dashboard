@@ -5,6 +5,10 @@ import Loader from "./components/Loader";
 import { fetchGet_ID_toggle } from "./post";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "./redux/action";
+import { Flex } from "./components/styles/Flex.styled";
+import { CardStyle } from "./components/styles/Card.styled";
+import { LoaderStyled } from "./components/styles/Loader.styled";
+import { Button } from "./components/styles/Button.styled";
 export default function Index({ setIndex }) {
   //collect a post from store
   const collector = useSelector((state) => state.posts);
@@ -36,19 +40,8 @@ export default function Index({ setIndex }) {
     <div>
       <div>
         {collector.posts.length ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
+          <Flex>
+            <CardStyle>
               {collector.posts.map((post, i) => {
                 return (
                   <Card
@@ -61,17 +54,17 @@ export default function Index({ setIndex }) {
                 );
               })}
               <Link to={"/add-post"}>
-                <button>Add Post</button>
+                <Button>Add Posts</Button>
               </Link>
               <Link to={"/add-genre"}>
-                <button>Add Genre</button>
+                <Button>Add Genre</Button>
               </Link>
-            </div>
-          </div>
+            </CardStyle>
+          </Flex>
         ) : (
-          <div>
+          <LoaderStyled>
             <Loader />
-          </div>
+          </LoaderStyled>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import postAuth from "./post";
 import Textarea from "./components/Textarea";
 import axios from "axios";
+import { AddPost_Styled, FormStyled } from "./components/styles/AddPost.styled";
 import { update } from "./redux/action";
 import { useDispatch, useSelector } from "react-redux";
 export default function AddPost({ index, setIndex }) {
@@ -146,30 +147,14 @@ export default function AddPost({ index, setIndex }) {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "wheat",
-        borderRadius: "20px",
-        paddingTop: "10px",
-      }}
-    >
-      <form
+    <AddPost_Styled>
+      <FormStyled
         encType="multipart/form-data"
         onSubmit={(e) => {
           e.preventDefault();
         }}
         method="post"
         ref={form}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "5px",
-        }}
       >
         <label htmlFor="image">
           CONTENT IMAGE
@@ -218,7 +203,7 @@ export default function AddPost({ index, setIndex }) {
           />
         </label>
         <Textarea submit={add_update} post={post} />
-      </form>
-    </div>
+      </FormStyled>
+    </AddPost_Styled>
   );
 }

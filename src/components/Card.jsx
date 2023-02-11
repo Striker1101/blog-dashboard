@@ -2,6 +2,8 @@ import React from "react";
 import edit from "../assets/edit.svg";
 import deltepost from "../assets/delete.svg";
 import { Link } from "react-router-dom";
+import { Card_Content } from "./styles/Card.styled";
+import { Button } from "../components/styles/Button.styled";
 import { useNavigate } from "react-router-dom";
 import { fetchGet_ID_delete } from "../post";
 import { useDispatch } from "react-redux";
@@ -37,25 +39,12 @@ export default function Card({ post, index, setIndex, toggle }) {
     }
   }
   return (
-    <div
-      data-index={index}
-      data-id={post._id}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "whitesmoke",
-        width: "80vw",
-        flexDirection: "column",
-        borderRadius: "15px",
-      }}
-    >
+    <Card_Content data-index={index} data-id={post._id}>
       <div>
         <img
           onClick={(e) => {
             deleteClick(e);
           }}
-          style={{ width: "30px" }}
           src={deltepost}
           alt=""
         />
@@ -63,30 +52,27 @@ export default function Card({ post, index, setIndex, toggle }) {
           onClick={(e) => {
             editClick(e);
           }}
-          style={{ width: "30px" }}
           src={edit}
           alt=""
         />
       </div>
       <Link to={`/${post._id}`}>
-        <h2 style={{ textAlign: "center" }}>{post.title}</h2>
-        <hr style={{ width: "70vw" }}></hr>
+        <h2>{post.title}</h2>
+        <hr />
       </Link>
       <div>
         <p>{post.publish ? "PUBLISHED" : "UNPUBLISHED"}</p>
-        <button
+        <Button
           onClick={(e) => {
             toggle(e);
           }}
         >
           {post.publish ? "unpublish" : "publish"}
-        </button>
+        </Button>
       </div>
-      <div style={{ width: "100%" }}>
-        <h5 style={{ float: "right", marginRight: "5px" }}>
-          uploaded on {date.toDateString()}
-        </h5>
+      <div>
+        <h5>uploaded on {date.toDateString()}</h5>
       </div>
-    </div>
+    </Card_Content>
   );
 }

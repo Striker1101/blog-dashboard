@@ -9,11 +9,13 @@ import AddPost from "./AddPost";
 import Footer from "./components/Footer";
 import Logout from "./Logout";
 import AddGenre from "./AddGenre";
+import GlobalStyles from "./components/styles/Global";
+import { Container } from "./components/styles/Container.styled";
 import React, { useEffect, useState } from "react";
-import { fetchGetAuth } from "./post";
 import { useDispatch } from "react-redux";
 import { fetchPosts } from "./redux/reducer/posts";
 import { ThemeProvider } from "styled-components";
+import theme from "./Theme";
 function App() {
   const [index, setindex] = useState(null);
 
@@ -23,24 +25,70 @@ function App() {
   }, []);
 
   return (
-    <div className="blog">
-      <Nav  />
-      <ThemeProvider theme={theme}>
-        <Routes>
-          <Route index path="/" element={<Index setIndex={setindex} />} />
-          <Route path="/:post" element={<BlogPage />} />
-          <Route path="/sign-up" element={<Signup />} />
-          <Route path="/log-in" element={<Login />} />
-          <Route path="/log-out" element={<Logout />} />
-          <Route
-            path="/add-post"
-            element={<AddPost index={index} setIndex={setindex} />}
-          />
-          <Route path="/add-genre" element={<AddGenre />} />
-        </Routes>
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Nav />
+      <Routes>
+        <Route
+          index
+          path="/"
+          element={
+            <Container>
+              <Index setIndex={setindex} />
+            </Container>
+          }
+        />
+        <Route
+          path="/:post"
+          element={
+            <Container>
+              <BlogPage />
+            </Container>
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={
+            <Container>
+              <Signup />
+            </Container>
+          }
+        />
+        <Route
+          path="/log-in"
+          element={
+            <Container>
+              <Login />
+            </Container>
+          }
+        />
+        <Route
+          path="/log-out"
+          element={
+            <Container>
+              <Logout />
+            </Container>
+          }
+        />
+        <Route
+          path="/add-post"
+          element={
+            <Container>
+              <AddPost index={index} setIndex={setindex} />
+            </Container>
+          }
+        />
+        <Route
+          path="/add-genre"
+          element={
+            <Container>
+              <AddGenre />
+            </Container>
+          }
+        />
+      </Routes>
       <Footer />
-    </div>
+    </ThemeProvider>
   );
 }
 

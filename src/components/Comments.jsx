@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-
+import React, {useState } from 'react';
+import { Image_Container, PackOne,PackTwo } from './styles/Comment.styled';
 import deleteCom from '../assets/delete.svg'
 import edit from '../assets/edit.svg'
 import {comment_update, comment_delete} from '../post'
@@ -68,40 +68,27 @@ export default function Comments({postID, comments, setComments}) {
   }
 
 return (
-    <div className='commentsContainer'>
-        <div className='comments'>
+    <div >
+        <div >
             {
                 comments.map((comment, i)=>{
                     return(
-                        <div key={i}
+                        <PackOne key={i}
                         data-id={`${comment._id}`}
-                        style={{
-                            backgroundColor:'wheat',
-                            borderRadius:'10px',
-                            marginTop:'10px',
-                            paddingLeft:'10px',
-                            paddingBottom:'5px',
-                            width:'100%',
-                            wordBreak:'break-all',
-                        }}
+
                         >
-                            <div style={{
-                                display:'flex',
-                                paddingRight:'5px',
-                                width:'100%',
-                                justifyContent:'space-between'
-                            }}>
+                            <PackTwo>
                             <h3>{comment.username}</h3>
-                            <div style={{float:"left" }}>
+                            <Image_Container>
                                 <img  onClick={(e)=>{deleteComment(e)}} style={{cursor:'pointer', width:'20px', height:'20px'}} src={deleteCom} alt="" />
                                 <img  onClick={(e)=>{editComment(e)}} style={{cursor:'pointer', width:'20px', height:'20px'}} src={edit} alt="" />
-                            </div>
-                            </div>
+                            </Image_Container>
+                            </PackTwo>
                          
-                        <p style={{}}>{comment.text}</p>
+                        <p>{comment.text}</p>
                         <div></div>
-                        <p style={{float:'right',position:'relative', bottom:'30px'}}>{new Date(comment.createdAt).toDateString()}</p>
-                        </div>
+                        <h6>{new Date(comment.createdAt).toDateString()}</h6>
+                        </PackOne>
                         
                     )
                 })

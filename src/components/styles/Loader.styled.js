@@ -1,0 +1,11 @@
+import styled from "styled-components";
+
+export const LoaderStyled = styled.div`
+width: 100%;
+  height: 100vh;
+  position: fixed;
+  background:
+      url("https://media.giphy.com/media/8agqybiK5LW8qrG3vJ/giphy.gif") center
+      no-repeat;
+  z-index: 1;
+`;

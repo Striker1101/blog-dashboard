@@ -4,10 +4,10 @@ export default function Post({post}) {
     return (
     <div >
       <div>
-        <h1 style={{textAlign:'center'}}>
+        <h1>
             {post.title.toUpperCase()}
         </h1>
-        <div className='content'>
+        <div>
         {/* content goes here */}
         </div>
         <h5 
