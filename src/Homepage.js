@@ -3,7 +3,14 @@ import Card from "./components/Card";
 import { Link } from "react-router-dom";
 import Loader from "./components/Loader";
 import { fetchGet_ID_toggle } from "./post";
-export default function Index({ setIndex, posts, setPosts }) {
+import { useSelector, useDispatch } from "react-redux";
+import { update } from "./redux/action";
+export default function Index({ setIndex }) {
+  //collect a post from store
+  const collector = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
+  //toggle between publish and unpublished
   function toggle(e) {
     const card = e.currentTarget.parentElement.parentElement;
     const take = card.children[2].children[0].textContent;
@@ -22,18 +29,19 @@ export default function Index({ setIndex, posts, setPosts }) {
       id,
       { toggle }
     ).then((data) => {
-      setPosts(data.json.posts);
+      dispatch(update(data.json.posts));
     });
   }
   return (
     <div>
-      <div
-      >
-        {posts.length ? (
-          <div style={{
-            display: "flex",
-            justifyContent: "center",
-          }} >
+      <div>
+        {collector.posts.length ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -41,10 +49,9 @@ export default function Index({ setIndex, posts, setPosts }) {
                 gap: "10px",
               }}
             >
-              {posts.map((post, i) => {
+              {collector.posts.map((post, i) => {
                 return (
                   <Card
-                    setPosts={setPosts}
                     setIndex={setIndex}
                     key={i}
                     index={i}
@@ -55,6 +62,9 @@ export default function Index({ setIndex, posts, setPosts }) {
               })}
               <Link to={"/add-post"}>
                 <button>Add Post</button>
+              </Link>
+              <Link to={"/add-genre"}>
+                <button>Add Genre</button>
               </Link>
             </div>
           </div>

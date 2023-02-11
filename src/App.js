@@ -1,4 +1,3 @@
-
 import "./App.css";
 import BlogPage from "./blog_page";
 import { Routes, Route } from "react-router-dom";
@@ -9,32 +8,37 @@ import Login from "./login";
 import AddPost from "./AddPost";
 import Footer from "./components/Footer";
 import Logout from "./Logout";
+import AddGenre from "./AddGenre";
 import React, { useEffect, useState } from "react";
 import { fetchGetAuth } from "./post";
-
+import { useDispatch } from "react-redux";
+import { fetchPosts } from "./redux/reducer/posts";
+import { ThemeProvider } from "styled-components";
 function App() {
-  const [index, setindex] =useState(null)
-  const [posts, setPosts] = useState([]);
+  const [index, setindex] = useState(null);
+
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchGetAuth(
-      `${
-        process.env.NODE_ENV === "development"
-          ? process.env.REACT_APP_DEV_MODE
-          : process.env.REACT_APP_PRO_MODE
-      }/all`
-    ).then((data) => setPosts(data.json.posts));
+    dispatch(fetchPosts());
   }, []);
+
   return (
     <div className="blog">
-      <Nav posts={posts} />
-      <Routes>
-        <Route index path="/" element={<Index setIndex={setindex}  setPosts={setPosts} posts={posts}/>} />
-        <Route path="/:post" element={<BlogPage />} />
-        <Route path="/sign-up" element={<Signup />} />
-        <Route path="/log-in" element={<Login />} />
-        <Route path="/log-OUT" element={<Logout />} />
-        <Route path="/add-post" element={<AddPost index={index} setIndex={setindex} posts={posts} setPosts={setPosts} />} />
-      </Routes>
+      <Nav  />
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route index path="/" element={<Index setIndex={setindex} />} />
+          <Route path="/:post" element={<BlogPage />} />
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/log-in" element={<Login />} />
+          <Route path="/log-out" element={<Logout />} />
+          <Route
+            path="/add-post"
+            element={<AddPost index={index} setIndex={setindex} />}
+          />
+          <Route path="/add-genre" element={<AddGenre />} />
+        </Routes>
+      </ThemeProvider>
       <Footer />
     </div>
   );
