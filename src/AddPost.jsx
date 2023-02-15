@@ -89,6 +89,7 @@ export default function AddPost({ index, setIndex }) {
     // update post
     if (post) {
       return (() => {
+        
         axios
           .put(
             `${

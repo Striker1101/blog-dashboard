@@ -24,7 +24,7 @@ export default function Signup() {
         { username, email, password }
       ).then((data) => {
         if (data.json.message) {
-          return navigate("/blog/log-in");
+          return navigate("/log-in");
         } else {
           data.json.errors.forEach((data) => {
             if (data.param === "password") {

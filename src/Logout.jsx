@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Flex } from "./components/styles/Flex.styled";
 import { Button } from "./components/styles/Button.styled";
 export default function Logout() {
+  const navigate = useNavigate();
   return (
     <Flex>
       <div>
@@ -11,6 +13,7 @@ export default function Logout() {
         </h2>
         <Button
           onClick={() => {
+            navigate("/");
             localStorage.clear();
           }}
           type="submit"
