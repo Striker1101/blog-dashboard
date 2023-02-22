@@ -7,6 +7,11 @@ export const AddPost_Styled = styled.div`
   background-color: blanchedalmond;
   border-radius: 20px;
   padding-top: 10px;
+
+  select {
+    width: 60%;
+    height: 40px;
+  }
 `;
 
 export const FormStyled = styled.form`
@@ -16,3 +21,4 @@ export const FormStyled = styled.form`
   align-items: center;
   gap: 5px;
 `;
+

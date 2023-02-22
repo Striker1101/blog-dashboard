@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-
+import {Button} from "../components/styles/Button.styled"
 export default function App({ submit, post }) {
   const editorRef = useRef(null);
   const log = function () {
@@ -51,9 +51,12 @@ export default function App({ submit, post }) {
             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
         }}
       />
-      <button style={{ margin: "10px" }} onClick={log}>
+      <Button 
+      bg={"black"}
+      color={"wheat"}
+      style={{ margin: "10px" }} onClick={log}>
         {post ? "Update" : "Add"}
-      </button>
+      </Button>
     </>
   );
 }

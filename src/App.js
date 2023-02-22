@@ -1,4 +1,3 @@
-import "./App.css";
 import BlogPage from "./blog_page";
 import { Routes, Route } from "react-router-dom";
 import Index from "./Homepage";

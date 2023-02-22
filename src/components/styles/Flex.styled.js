@@ -4,6 +4,8 @@ export const Flex = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: ${({ lgDir }) => lgDir};
+  gap: ${({ gap }) => gap || "0px"};
 
   & > div,
   & > ul {
@@ -11,7 +13,7 @@ export const Flex = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
-    flex-direction: column;
+    flex-direction: ${({ smDir }) => smDir};
     text-align: center;
   }
 `;

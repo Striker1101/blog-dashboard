@@ -5,10 +5,12 @@ import Loader from "./components/Loader";
 import { fetchGet_ID_toggle } from "./post";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "./redux/action";
+import GenreList from "./components/GenreList";
 import { Flex } from "./components/styles/Flex.styled";
 import { CardStyle } from "./components/styles/Card.styled";
 import { LoaderStyled } from "./components/styles/Loader.styled";
 import { Button } from "./components/styles/Button.styled";
+import { HomepageStyled } from "./components/styles/Homepage.styled";
 export default function Index({ setIndex }) {
   //collect a post from store
   const collector = useSelector((state) => state.posts);
@@ -37,10 +39,12 @@ export default function Index({ setIndex }) {
     });
   }
   return (
-    <div>
+    <HomepageStyled>
+      <GenreList />
+      <hr />
       <div>
         {collector.posts.length ? (
-          <Flex>
+          <Flex smDir="column" lgDir="column">
             <CardStyle>
               {collector.posts.map((post, i) => {
                 return (
@@ -53,13 +57,15 @@ export default function Index({ setIndex }) {
                   />
                 );
               })}
+            </CardStyle>
+            <div>
               <Link to={"/add-post"}>
                 <Button>Add Posts</Button>
               </Link>
               <Link to={"/add-genre"}>
                 <Button>Add Genre</Button>
               </Link>
-            </CardStyle>
+            </div>
           </Flex>
         ) : (
           <LoaderStyled>
@@ -67,6 +73,6 @@ export default function Index({ setIndex }) {
           </LoaderStyled>
         )}
       </div>
-    </div>
+    </HomepageStyled>
   );
 }

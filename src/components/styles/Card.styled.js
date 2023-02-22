@@ -32,7 +32,7 @@ export const Card_Content = styled.div`
   justify-content: center;
   align-items: center;
   background-color: whitesmoke;
-  width: 80vw;
+  width: 80%;
   flex-direction: column;
   border-radius: 15px;
 `;

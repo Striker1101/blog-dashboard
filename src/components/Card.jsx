@@ -39,7 +39,9 @@ export default function Card({ post, index, setIndex, toggle }) {
     }
   }
   return (
-    <Card_Content data-index={index} data-id={post._id}>
+    <Card_Content
+     data-index={index}
+      data-id={post._id}>
       <div>
         <img
           onClick={(e) => {
@@ -63,6 +65,7 @@ export default function Card({ post, index, setIndex, toggle }) {
       <div>
         <p>{post.publish ? "PUBLISHED" : "UNPUBLISHED"}</p>
         <Button
+          color={"darkblue"}
           onClick={(e) => {
             toggle(e);
           }}

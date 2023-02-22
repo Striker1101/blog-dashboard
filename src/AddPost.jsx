@@ -15,127 +15,130 @@ export default function AddPost({ index, setIndex }) {
   const [Form, setForm] = useState({
     title: "",
     summary: "",
-    publish: "",
+    publish: false,
     image: "",
   });
+
+  const [genres, setGenres] = useState([]);
 
   const navigate = useNavigate();
 
   function handlePhoto(e) {
     setForm((prev) => ({ ...prev, image: e.target.files[0] }));
   }
-  function handleForm(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-  function handlePublish(e) {
-    setForm((prev) => ({
-      ...prev,
-      publish: e.target.checked,
-    }));
+  function handleForm(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function add_update(content) {
+  async function add_update(content) {
     const token = localStorage.getItem("token");
+    const data = new FormData();
+    data.append("file", Form.image);
+    data.append("upload_preset", "blog_post");
 
-    /**
-     *
-     * @param {string} id
-     * repre the posts ID to be uploaded with an image if available
-     * @param {Array} res
-     * repre the received posts for update the home page
-     * @returns returns empthy string when sucessful and error message when there is an error
-     */
-    const uploadFile = async function (id, res) {
-      //build new FormData and appened  image and cloudinary upload preset
-      const data = new FormData();
-      data.append("file", Form.image);
-      data.append("upload_preset", "blog_post");
+    const genre = [];
 
-      //return empty on no image found
-      if (Form.image.length < 0) {
-        if (res !== undefined) {
-          dispatch(update(res.posts));
-        }
-        console.log("onimage");
-        navigate("/");
-        return;
+    for (let i = 0; i < genres.length; i++) {
+      const name = genres[i].name;
+      if (document.getElementById(`${name}`).checked) {
+        genre.push(document.getElementById(`${name}`).value);
       }
-      await axios
-        .post("https://api.cloudinary.com/v1_1/durfrwtjs/image/upload", data)
+    }
+
+    function upload(url = post.secure_url, publicID = post.public_id) {
+      axios
+        .put(
+          `${
+            process.env.NODE_ENV === "development"
+              ? process.env.REACT_APP_DEV_MODE
+              : process.env.REACT_APP_PRO_MODE
+          }/posts/${post._id}/update`,
+          {
+            title: Form.title === "" ? post.title : Form.title,
+            summary: Form.summary === "" ? post.summary : Form.summary,
+            publish: Form.publish === "" ? post.publish : Form.publish,
+            genre,
+            content: content === "" ? post.content : content,
+            imageUrl: url,
+            publicId: publicID,
+            newImage,
+            oldPic: post.publicId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              // "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((res) => {
-          axios
-            .put(
-              `${
-                process.env.NODE_ENV === "development"
-                  ? process.env.REACT_APP_DEV_MODE
-                  : process.env.REACT_APP_PRO_MODE
-              }/posts/${id}/update_image`,
-              { imageUrl: res.data.secure_url, publicId: res.data.public_id },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  // "Content-Type": "application/x-www-form-urlencoded",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            )
-            .then((response) => {
-              dispatch(update(response.data.posts));
-              console.log("image");
-              navigate("/");
-            });
+          form.current.reset();
+          setIndex(null);
+          dispatch(update(res.data.posts));
+          navigate("/")
         });
-    };
+    }
+
     // update post
     if (post) {
-      return (() => {
-        
+      // when there is a new image to upload
+
+      var newImage = false;
+      if (Form.image && post.imageUrl !== "") {
+        newImage = true;
         axios
-          .put(
-            `${
-              process.env.NODE_ENV === "development"
-                ? process.env.REACT_APP_DEV_MODE
-                : process.env.REACT_APP_PRO_MODE
-            }/posts/${post._id}/update`,
-            {
-              title: Form.title === "" ? post.title : Form.title,
-              summary: Form.summary === "" ? post.summary : Form.summary,
-              publish: Form.publish === "" ? post.publish : Form.publish,
-              content: content === "" ? post.content : content,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                // "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: `Bearer ${token}`,
-              },
-            }
+          .post(
+            `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+            data
           )
           .then((res) => {
-            uploadFile(post._id, res.data);
+            console.log("in");
+            upload(res.data.secure_url, res.data.public_id);
           });
+        return;
+      }
+      return (() => {
+        upload();
       })();
     }
 
     //add post
-    console.log(Form);
-    postAuth(
-      `${
-        process.env.NODE_ENV === "development"
-          ? process.env.REACT_APP_DEV_MODE
-          : process.env.REACT_APP_PRO_MODE
-      }/posts`,
-      {
-        title: Form.title,
-        summary: Form.summary,
-        publish: Form.publish,
-        content,
-      }
-    ).then((data) => {
-      form.current.reset();
-      setIndex(null);
-      uploadFile(data.json.id, data.json);
-    });
+    if (Form.image) {
+      await axios
+        .post(
+          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+          data
+        )
+        .then((res) => {
+          postAuth(
+            `${
+              process.env.NODE_ENV === "development"
+                ? process.env.REACT_APP_DEV_MODE
+                : process.env.REACT_APP_PRO_MODE
+            }/posts`,
+            {
+              title: Form.title,
+              summary: Form.summary,
+              publish: Form.publish,
+              genre,
+              content,
+              imageUrl: res.data.secure_url,
+              publicId: res.data.public_id,
+            }
+          ).then((data) => {
+            form.current.reset();
+            navigate("/");
+            dispatch(update(data.json.posts));
+            //data.json.errors  [].msg
+          });
+        });
+    } else {
+      console.log("fill in image");
+    }
   }
 
   function cleanup() {
@@ -144,6 +147,22 @@ export default function AddPost({ index, setIndex }) {
 
   useEffect(() => {
     setPost(posts[index]);
+    axios
+      .get(
+        `${
+          process.env.NODE_ENV === "development"
+            ? process.env.REACT_APP_DEV_MODE
+            : process.env.REACT_APP_PRO_MODE
+        }/genre`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setGenres(res.data.genre);
+      });
     return cleanup();
   }, []);
 
@@ -165,6 +184,7 @@ export default function AddPost({ index, setIndex }) {
             type="file"
             name="image"
             id="image"
+            required
           />
         </label>
         <label htmlFor="title">
@@ -198,10 +218,29 @@ export default function AddPost({ index, setIndex }) {
           <input
             type="checkbox"
             name="publish"
-            onChange={handlePublish}
+            onChange={handleForm}
             id="publish"
-            defaultChecked={post ? post.publish : false}
+            defaultChecked={post ? post.publish : Form.publish}
           />
+        </label>
+        <label htmlFor="genre_group">
+          {genres.map((genre, i) => {
+            if (post) {
+              var check = post.genre.includes(genre._id);
+            }
+            return (
+              <label key={i} htmlFor="genre">
+                {genre.name}
+                <input
+                  type="checkbox"
+                  name="genre"
+                  id={genre.name}
+                  value={genre._id}
+                  defaultChecked={post ? check : false}
+                />
+              </label>
+            );
+          })}
         </label>
         <Textarea submit={add_update} post={post} />
       </FormStyled>

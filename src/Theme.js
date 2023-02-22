@@ -3,6 +3,7 @@ const theme = {
     header: "#ebfbff",
     body: "wheat",
     footer: "#003333",
+    nav: "black",
   },
   mobile: "765px",
 };

@@ -1,19 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Flex } from "./styles/Flex.styled";
+import { NavStyled } from "./styles/Nav.styled";
 export default function Nav() {
-  const collector = useSelector((state) => state.posts);
   const key = localStorage.getItem("token");
- 
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        marginBottom: "20px",
-      }}
-    >
-      <div style={{ display: "flex", gap: "10px" }}>
+    <NavStyled>
+      <Flex smDir="row" lgDir="row" gap="10px">
+        <a href="http://erose.vercel.app"> Home</a>
         <Link to={"/"}>Blog Post</Link>
         {key ? (
           <Link to={"/log-out"}>Log Out</Link>
@@ -21,7 +16,7 @@ export default function Nav() {
           <Link to={"/sign-up"}>Sign up</Link>
         )}
         <Link to={"/log-in"}>Login</Link>
-      </div>
-    </div>
+      </Flex>
+    </NavStyled>
   );
 }
