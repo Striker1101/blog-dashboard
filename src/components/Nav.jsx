@@ -4,7 +4,7 @@ import { Flex } from "./styles/Flex.styled";
 import { NavStyled } from "./styles/Nav.styled";
 export default function Nav() {
   const key = localStorage.getItem("token");
-
+ console.log(key)
   return (
     <NavStyled>
       <Flex smDir="row" lgDir="row" gap="10px">

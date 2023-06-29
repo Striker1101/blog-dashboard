@@ -38,6 +38,7 @@ export default function Index({ setIndex }) {
       dispatch(update(data.json.posts));
     });
   }
+  console.log(collector);
   return (
     <HomepageStyled>
       <GenreList />

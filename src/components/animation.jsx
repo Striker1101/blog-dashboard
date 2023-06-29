@@ -388,8 +388,8 @@ function Icon() {
           y2="252"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#3A2727" />
-          <stop offset="0.90625" stop-color="#F51F1F" stop-opacity="0" />
+          <stop stopColor="#3A2727" />
+          <stop offset="0.90625" stopColor="#F51F1F" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_8_243"
@@ -399,13 +399,9 @@ function Icon() {
           y2="185"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F2F2F2" />
-          <stop
-            offset="0.119792"
-            stop-color="#C93131"
-            stop-opacity="0.880208"
-          />
-          <stop offset="1" stop-color="#322525" stop-opacity="0" />
+          <stop stopColor="#F2F2F2" />
+          <stop offset="0.119792" stopColor="#C93131" stopOpacity="0.880208" />
+          <stop offset="1" stopColor="#322525" stopOpacity="0" />
         </linearGradient>
       </defs>
     </SVG_Styled>
